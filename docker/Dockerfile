@@ -4,6 +4,9 @@ FROM ${BASE_IMAGE}
 # Ensure apt-get won't prompt for selecting options
 ENV DEBIAN_FRONTEND=noninteractive
 COPY docker/requirements-apt.txt requirements-apt.txt
+# RUN sed -i -r 's/archive.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list 
+RUN sed -i 's/http:\/\/archive.ubuntu.com/http:\/\/mirrors.tuna.tsinghua.edu.cn\/ubuntu/g' /etc/apt/sources.list
+RUN cat /etc/apt/sources.list
 RUN apt-get upgrade && apt-get update && \
   xargs apt-get install -y < requirements-apt.txt && \
   rm requirements-apt.txt && \

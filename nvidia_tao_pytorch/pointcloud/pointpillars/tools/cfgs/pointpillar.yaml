@@ -1,7 +1,7 @@
 dataset:
     class_names: ['Car', 'Pedestrian', 'Cyclist']
     type: 'KittiDataset'
-    data_path: '/data/zhimengf/tlt-experiments/data/kitti'
+    data_path: '/media/hdis2/data/kitti'
     data_split: {
         'train': train,
         'test': val

@@ -14,7 +14,7 @@
 
 # This file is modified from https://github.com/traveller59/second.pytorch
 """FastAI optimizer."""
-from collections import Iterable
+from collections.abc import Iterable
 
 import torch
 from torch import nn

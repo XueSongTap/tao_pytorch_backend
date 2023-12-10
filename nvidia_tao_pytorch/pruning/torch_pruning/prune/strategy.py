@@ -12,6 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
+# 脚本中定义了几种剪枝策略类，每个策略类都继承自BaseStrategy。这些策略用于确定在模型剪枝过程中哪些参数应该被移除。下面是每个策略的详细说明：
+
+# BaseStrategy
+# 这是一个抽象基类（ABC），定义了所有剪枝策略应遵循的接口。它要求派生类实现apply方法，该方法将根据权重和用户指定的剪枝比例来应用剪枝策略。
+
+# RandomStrategy
+# 这个类实现了随机剪枝。它随机选取一定比例或数量的参数进行移除。apply方法首先确定需要剪掉的参数数量，然后从所有参数中随机选取相应数量的参数。
+
+# LNStrategy
+# 这个类是一个基于L1范数或L2范数的剪枝策略。它支持两种模式：“amount”和“thresh”：
+
+# "amount": 按照用户指定的剪枝比例，对参数的L1或L2范数进行排序，然后移除范数值最小的一定比例的参数。
+# "thresh": 设置一个阈值，移除范数值小于这个阈值的参数。
+# CustomScoreStrategy
+# 这个策略允许用户用自定义的分数来决定剪枝。给定一个分数向量和一个阈值，它会保留那些分数高于阈值的参数，移除其余的参数。这个策略与LNStrategy中的“thresh”模式类似，但它可以应用于任何类型的分数，不仅限于L1或L2范数。
+
+# L1Strategy 和 L2Strategy
+# 这两个类是LNStrategy的具体实例，分别用于L1范数（绝对值之和）和L2范数（平方和的平方根）剪枝。它们默认使用“amount”模式。
+
+# 在使用这些策略类时，你通常会创建一个策略实例，并调用它的apply方法，传入模型的权重和指定的剪枝参数。策略会返回需要剪掉的参数索引列表。然后这些索引可以用来实际修改模型的参数，例如，通过将对应的权重设置为零或从参数列表中移除它们。
+
+# 选择哪个策略取决于你的具体需求和剪枝目标。例如，如果你想随机剪枝，你会选择RandomStrategy。如果你想基于参数的重要性剪枝，你可能会选择L1Strategy或L2Strategy。如果你有自定义的剪枝标准或分数，你可以使用CustomScoreStrategy。
+
 """Strategy of pruning."""
 import torch
 from abc import abstractclassmethod, ABC
